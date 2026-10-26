@@ -1,0 +1,8 @@
+# RIDA medsam vnc2lucchi_subset1: entry configuration (python tools/train.py <this file>)
+_base_: ../../base/medsam/vnc2lucchi_subset1.yaml
+rida:
+  num_anchors: 32
+  gate_quantile: 0.7
+  lambda_rc: 0.1
+  lambda_rs: 1.0
+  lambda_rm: 0.1

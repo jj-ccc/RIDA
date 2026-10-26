@@ -1,0 +1,42 @@
+# medsam cardiac_ct2mr
+_base_: ./medsam.yaml
+benchmark: cardiac
+direction: ct2mr
+classes: [AA, LAC, LVC, MYO]
+evaluation: medical
+data:
+  source: data/cardiac/CT
+  target: data/cardiac/MR
+  num_classes: 5
+  pl_class_weights: [0.1, 2.5, 2.5, 1, 1.5]
+model:
+  lora_rank: 4
+warmup:
+  iters: 4000
+  batch_size: 8
+  lr: 0.0005
+  lr_schedule: constant
+  lr_warmup_iters: 0
+  domain_rand: true
+  geom_aug: true
+  class_weights: [0.1, 1, 1, 1, 1]
+train:
+  iters: 12000
+  batch_size: 8
+  lr: 0.0001
+  lr_warmup_iters: 300
+  weight_decay: 0.0005
+  ema_decay: 0.99
+  class_weights: [0.1, 2.5, 2.5, 1, 1.5]
+  sup_weight: 1.0
+  pl_target: hard
+  freeze_bn: false
+  domain_rand: true
+  geom_aug: false
+  strong_aug: [0.8, 0.5, 0.5, 0.5]
+  optimizer_reset: false
+  restart_every: 0
+  eval_batch_size: 2
+  eval_largest_cc: true
+  flip_teacher: false
+  freeze_encoder: false

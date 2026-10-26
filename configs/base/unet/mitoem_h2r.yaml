@@ -1,0 +1,45 @@
+# unet mitoem_h2r
+_base_: ./unet.yaml
+benchmark: mitoem
+direction: h2r
+classes: [mito]
+evaluation: em
+data:
+  num_classes: 2
+  kind: mito
+  source_images: data/em_volumes/MitoEM/human/training.hdf
+  source_labels: data/em_volumes/MitoEM/human/training_groundtruth.hdf
+  target_images: data/em_volumes/MitoEM/rat/training.hdf
+  test_images: data/em_volumes/MitoEM/rat/testing.hdf
+  test_labels: data/em_volumes/MitoEM/rat/testing_groundtruth.hdf
+  crop_size: 512
+  target_crop_size: 512
+  test_size: 1024
+  source_stride: 1
+  target_stride: 1
+model:
+  in_channels: 1
+  paired: true
+warmup:
+  iters: 3500
+  batch_size: 4
+  lr_schedule: constant
+  lr_warmup_iters: 200
+  domain_rand: false
+  geom_aug: false
+  class_weights: [0.1, 1]
+train:
+  iters: 19500
+  batch_size: 2
+  lr: 0.0001
+  lr_warmup_iters: 600
+  ema_decay: 0.999
+  class_weights: [0.1, 1]
+  sup_weight: [1, 0.5, 4000]
+  ramp_iters: 4000
+  domain_rand: false
+  strong_aug: [0.6, 0.5, 0.3, 0.0]
+  restart_at: 0
+  restart_every: 0
+  eval_batch_size: 1
+  eval_largest_cc: false

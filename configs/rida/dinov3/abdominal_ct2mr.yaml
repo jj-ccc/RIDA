@@ -1,0 +1,8 @@
+# RIDA dinov3 abdominal_ct2mr: entry configuration (python tools/train.py <this file>)
+_base_: ../../base/dinov3/abdominal_ct2mr.yaml
+rida:
+  num_anchors: 32
+  gate_quantile: 0.7
+  lambda_rc: 0.1
+  lambda_rs: 0.2
+  lambda_rm: 1.0

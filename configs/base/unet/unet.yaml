@@ -1,0 +1,13 @@
+# shared by every unet setting
+_base_: ../base.yaml
+model:
+  backbone: unet
+warmup:
+  lr: 0.0001
+train:
+  lr_schedule: cosine
+  weight_decay: 0.0005
+  pl_target: soft
+  freeze_bn: true
+  geom_aug: false
+  optimizer_reset: false

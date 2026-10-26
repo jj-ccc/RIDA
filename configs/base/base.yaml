@@ -1,0 +1,15 @@
+# shared by all 24 settings
+seed: 42
+warmup:
+  seed: 42
+  loader_seed: 42
+runtime:
+  eval_interval: 500
+  save_interval: 500
+  log_interval: 50
+  num_workers: 2
+optimizer:
+  betas: [0.9, 0.999]
+  grad_clip: 1.0
+loss:
+  dice_weight: 1.0

@@ -1,0 +1,36 @@
+# unet cardiac_mr2ct
+_base_: ./unet.yaml
+benchmark: cardiac
+direction: mr2ct
+classes: [AA, LAC, LVC, MYO]
+evaluation: medical
+data:
+  source: data/cardiac/MR
+  target: data/cardiac/CT
+  num_classes: 5
+model:
+  in_channels: 3
+  base_channels: 32
+warmup:
+  iters: 10000
+  batch_size: 8
+  lr_schedule: cosine
+  lr_warmup_iters: 200
+  domain_rand: true
+  geom_aug: false
+  class_weights: [0.1, 1, 1, 1, 1]
+train:
+  iters: 18000
+  batch_size: 4
+  lr: 0.0001
+  lr_warmup_iters: 300
+  ema_decay: 0.999
+  class_weights: [0.1, 1, 1, 1, 1]
+  sup_weight: [1, 0.5, 2000]
+  ramp_iters: 2000
+  domain_rand: true
+  strong_aug: [0.6, 0.5, 0.3, 0.0]
+  restart_at: 0
+  restart_every: 0
+  eval_batch_size: 4
+  eval_largest_cc: true

@@ -1,0 +1,41 @@
+# medsam vnc2lucchi_subset2
+_base_: ./medsam.yaml
+benchmark: vnc2lucchi
+direction: subset2
+classes: [mito]
+evaluation: em
+data:
+  source: data/em/vnc
+  target: data/em/lucchi_subset2
+  num_classes: 2
+model:
+  lora_rank: 4
+warmup:
+  iters: 4000
+  batch_size: 8
+  lr: 0.0005
+  lr_schedule: constant
+  lr_warmup_iters: 200
+  domain_rand: false
+  geom_aug: true
+  class_weights: [0.1, 1]
+train:
+  iters: 12000
+  batch_size: 4
+  lr: 3.0e-05
+  lr_warmup_iters: 300
+  weight_decay: 0.0005
+  ema_decay: 0.99
+  class_weights: [0.1, 1]
+  sup_weight: [1, 0.1, 2000]
+  pl_target: hard
+  freeze_bn: true
+  domain_rand: false
+  geom_aug: true
+  strong_aug: [0.6, 0.5, 0.3, 0.0]
+  optimizer_reset: false
+  restart_every: 0
+  eval_batch_size: 4
+  eval_largest_cc: false
+  flip_teacher: false
+  freeze_encoder: true

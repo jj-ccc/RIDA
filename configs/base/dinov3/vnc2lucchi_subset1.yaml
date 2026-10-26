@@ -1,0 +1,40 @@
+# dinov3 vnc2lucchi_subset1
+_base_: ./dinov3.yaml
+benchmark: vnc2lucchi
+direction: subset1
+classes: [mito]
+evaluation: em
+data:
+  source: data/em/vnc
+  target: data/em/lucchi_subset1
+  num_classes: 2
+model:
+  freeze_encoder: true
+  trainable_blocks: 0
+  decoder_channels: 64
+warmup:
+  iters: 5000
+  batch_size: 12
+  lr: 0.0005
+  lr_schedule: cosine
+  lr_warmup_iters: 200
+  geom_aug: true
+  class_weights: [0.1, 1]
+train:
+  iters: 13000
+  batch_size: 8
+  lr: 3.0e-05
+  lr_schedule: cosine
+  lr_warmup_iters: 300
+  ema_decay: 0.99
+  class_weights: [0.1, 1]
+  sup_weight: [1, 0.1, 2000]
+  freeze_bn: true
+  domain_rand: true
+  geom_aug: true
+  strong_aug: [0.7, 0.5, 0.3, 0.3]
+  encoder_lr_mult: 0.1
+  optimizer_reset: false
+  restart_at: 0
+  restart_every: 0
+  eval_largest_cc: false

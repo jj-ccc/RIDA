@@ -1,0 +1,16 @@
+# shared by every dinov3 setting
+_base_: ../base.yaml
+model:
+  backbone: dinov3
+  in_channels: 3
+  low_channels: 256
+  enc_layers: [5, 11, 17, 23]
+  pretrained: pretrained/dinov3_vitl16_pretrain_lvd1689m.pth
+  repository: third_party/dinov3
+warmup:
+  domain_rand: true
+train:
+  weight_decay: 0.0005
+  ramp_iters: 2000
+  pl_target: hard
+  eval_batch_size: 4

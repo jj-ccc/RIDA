@@ -1,0 +1,14 @@
+# shared by every medsam setting
+_base_: ../base.yaml
+model:
+  backbone: medsam
+  in_channels: 3
+  decoder_channels: 64
+  pretrained: pretrained/medsam_vit_b.pth
+  repository: third_party/segment-anything
+  image_size: 512
+train:
+  lr_schedule: cosine
+  ramp_iters: 2000
+  encoder_lr_mult: 1.0
+  restart_at: 0

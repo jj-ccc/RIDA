@@ -1,0 +1,41 @@
+# medsam abdominal_ct2mr
+_base_: ./medsam.yaml
+benchmark: abdominal
+direction: ct2mr
+classes: [Spleen, R.Kidney, L.Kidney, Liver]
+evaluation: medical
+data:
+  source: data/abdominal/CT
+  target: data/abdominal/MR
+  num_classes: 5
+model:
+  lora_rank: 4
+warmup:
+  iters: 2000
+  batch_size: 8
+  lr: 0.0001
+  lr_schedule: cosine
+  lr_warmup_iters: 200
+  domain_rand: true
+  geom_aug: false
+  class_weights: [0.1, 1, 1, 1, 1]
+train:
+  iters: 14000
+  batch_size: 4
+  lr: 0.0001
+  lr_warmup_iters: 300
+  weight_decay: 0.0005
+  ema_decay: 0.999
+  class_weights: [0.1, 1, 1, 1, 1]
+  sup_weight: [1, 0.5, 2000]
+  pl_target: hard
+  freeze_bn: true
+  domain_rand: true
+  geom_aug: false
+  strong_aug: [0.6, 0.5, 0.3, 0.0]
+  optimizer_reset: false
+  restart_every: 0
+  eval_batch_size: 4
+  eval_largest_cc: true
+  flip_teacher: false
+  freeze_encoder: false
