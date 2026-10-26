@@ -129,8 +129,14 @@ bash scripts/data/check.sh          # verifies the layout of all 24 settings
 
 ## Checkpoints
 
-One RIDA checkpoint is provided per setting, `checkpoints/rida/<benchmark>/<setting>.pth`, where
-`<setting>` is `<backbone>_<direction>`, e.g. `checkpoints/rida/cardiac/dinov3_ct2mr.pth`.
+One RIDA checkpoint is provided per setting on [Hugging Face](https://huggingface.co/jiajianihao/RIDA):
+
+```bash
+huggingface-cli download jiajianihao/RIDA --local-dir checkpoints --include "rida/*"
+```
+
+The files are placed at `checkpoints/rida/<benchmark>/<setting>.pth`, where `<setting>` is
+`<backbone>_<direction>`, e.g. `checkpoints/rida/cardiac/dinov3_ct2mr.pth`.
 
 ## Training
 
